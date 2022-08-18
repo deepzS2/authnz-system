@@ -7,7 +7,7 @@ import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '@prisma/client';
 import { Permissions, PermissionUtil } from '@utils/permissions';
-import { IS_PRIVATE_KEY } from './auth.decorator';
+import { IS_PRIVATE_KEY } from '../auth.decorator';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
