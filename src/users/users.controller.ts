@@ -47,10 +47,10 @@ export class UsersController {
 
   @Private(Permissions.Admin)
   @Patch(':id')
-  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return await this.usersService.update({
       where: {
-        id,
+        id: Number(id),
       },
       data: updateUserDto,
     });
