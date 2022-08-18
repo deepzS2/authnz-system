@@ -40,6 +40,8 @@ export class UsersService {
       },
     });
 
+    if (!user) return;
+
     const permissions = new PermissionUtil(user.permissions);
 
     return {
@@ -54,6 +56,8 @@ export class UsersService {
         email,
       },
     });
+
+    if (!user) return;
 
     const permissions = new PermissionUtil(user.permissions);
 

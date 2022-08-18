@@ -7,6 +7,8 @@ import {
   Patch,
   Param,
   Delete,
+  BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
 import { Permissions } from '@utils/permissions';
 
@@ -21,6 +23,13 @@ export class UsersController {
   @Private(Permissions.Admin)
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
+    const userExists = await this.usersService.findByEmail(createUserDto.email);
+
+    if (userExists)
+      throw new BadRequestException({
+        message: 'An user with this email already exists!',
+      });
+
     return await this.usersService.create(createUserDto);
   }
 
@@ -39,7 +48,12 @@ export class UsersController {
   @Private(Permissions.Read)
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const user = await this.usersService.findById(+id);
+    const user = await this.usersService.findById(Number(id));
+
+    if (!user)
+      throw new NotFoundException({
+        message: 'User not found with that ID',
+      });
 
     delete user.password;
 
@@ -49,6 +63,13 @@ export class UsersController {
   @Private(Permissions.Admin)
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    const userExists = await this.usersService.findById(Number(id));
+
+    if (!userExists)
+      throw new NotFoundException({
+        message: 'User not found with that ID',
+      });
+
     return await this.usersService.update({
       where: {
         id: Number(id),
@@ -60,6 +81,13 @@ export class UsersController {
   @Private(Permissions.Admin)
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return await this.usersService.remove(+id);
+    const userExists = await this.usersService.findById(Number(id));
+
+    if (!userExists)
+      throw new NotFoundException({
+        message: 'User not found with that ID',
+      });
+
+    return await this.usersService.remove(Number(id));
   }
 }
