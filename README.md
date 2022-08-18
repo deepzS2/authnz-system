@@ -1,5 +1,5 @@
 <h1 align="center">
-  Authentication System
+  AuthNZ System
 </h1>
 <p align="center">
   A <a href="https://nestjs.com/">NestJS</a> RESTful API made with the objective to study more about <a href="https://discord.com/">Discord</a> permissions system!
