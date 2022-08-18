@@ -1,3 +1,4 @@
+import { Private } from '@auth/auth.decorator';
 import {
   Controller,
   Get,
@@ -7,11 +8,11 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { Permissions } from '@utils/permissions';
+
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Private } from '@auth/auth.decorator';
-import { Permissions } from '@utils/permissions';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
