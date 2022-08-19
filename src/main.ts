@@ -1,19 +1,19 @@
-import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common'
+import { NestFactory } from '@nestjs/core'
 
-import { AppModule } from './app.module';
-import { PrismaService } from './services/prisma.service';
+import { AppModule } from './app.module'
+import { PrismaService } from './services/prisma.service'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule)
 
   // Database
-  const prismaService = app.get(PrismaService);
-  await prismaService.enableShutdownHooks(app);
+  const prismaService = app.get(PrismaService)
+  await prismaService.enableShutdownHooks(app)
 
   // Validation
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe())
 
-  await app.listen(3000);
+  await app.listen(3000)
 }
-bootstrap();
+bootstrap()

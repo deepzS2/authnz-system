@@ -1,9 +1,10 @@
-import { UsersService } from '@/users/users.service';
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { UsersService } from '@/users/users.service'
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common'
+import { Request } from 'express'
 
-import { Private } from './auth.decorator';
-import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './guards/local-auth.guard';
+import { Private } from './auth.decorator'
+import { AuthService } from './auth.service'
+import { LocalAuthGuard } from './guards/local-auth.guard'
 
 @Controller('auth')
 export class AuthController {
@@ -14,15 +15,15 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  async login(@Req() req: Request) {
+    return this.authService.login(req.user)
   }
 
   @Private()
   @Get('profile')
-  async getProfile(@Request() req) {
-    const user = await this.usersService.findById(req.user.id);
+  async getProfile(@Req() req: Request) {
+    const user = await this.usersService.findById(req.user.id)
 
-    return user;
+    return user
   }
 }

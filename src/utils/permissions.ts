@@ -8,10 +8,10 @@ export enum Permissions {
 
 type PermissionsJSON = Omit<
   {
-    -readonly [K in keyof typeof Permissions]: boolean;
+    -readonly [K in keyof typeof Permissions]: boolean
   },
   number
->;
+>
 
 export class PermissionUtil {
   /**
@@ -30,7 +30,7 @@ export class PermissionUtil {
    * @returns True if has permission
    */
   hasPermission(permissionToCheck: Permissions) {
-    return !!(permissionToCheck & this.permission);
+    return !!(permissionToCheck & this.permission)
   }
 
   /**
@@ -38,9 +38,9 @@ export class PermissionUtil {
    * @param permissionToAdd Permission enum to add
    */
   addPermission(permissionToAdd: Permissions) {
-    this.permission |= permissionToAdd;
+    this.permission |= permissionToAdd
 
-    return this;
+    return this
   }
 
   /**
@@ -48,9 +48,9 @@ export class PermissionUtil {
    * @param permissionToRemove Permission enum to remove
    */
   removePermission(permissionToRemove: Permissions) {
-    this.permission ^= permissionToRemove;
+    this.permission ^= permissionToRemove
 
-    return this;
+    return this
   }
 
   /**
@@ -58,17 +58,17 @@ export class PermissionUtil {
    * @returns Object with permission keys and if has permission
    */
   toJSON(): PermissionsJSON {
-    const keys = Object.keys(Permissions) as Array<keyof typeof Permissions>;
+    const keys = Object.keys(Permissions) as Array<keyof typeof Permissions>
 
     const result = keys.reduce((prev, curr) => {
       // If is number don't add to the object
-      if (!isNaN(Number(curr))) return prev;
+      if (!isNaN(Number(curr))) return prev
 
-      prev[curr] = this.hasPermission(Permissions[curr]);
+      prev[curr] = this.hasPermission(Permissions[curr])
 
-      return prev;
-    }, {});
+      return prev
+    }, {})
 
-    return result as PermissionsJSON;
+    return result as PermissionsJSON
   }
 }

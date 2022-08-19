@@ -1,8 +1,8 @@
-import { UsersService } from '@/users/users.service';
-import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
-import * as bcrypt from 'bcrypt';
+import { UsersService } from '@/users/users.service'
+import { Injectable } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { User } from '@prisma/client'
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class AuthService {
@@ -12,26 +12,26 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<User> {
-    const user = await this.usersService.findByEmail(email);
+    const user = await this.usersService.findByEmail(email)
 
-    if (!user) return;
+    if (!user) return
 
-    const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+    const isPasswordCorrect = bcrypt.compareSync(password, user.password)
 
-    if (!isPasswordCorrect) return;
+    if (!isPasswordCorrect) return
 
-    return user;
+    return user
   }
 
-  login(user: Pick<User, 'id' | 'name' | 'permissions'>) {
+  login(user: Express.User) {
     const payload = {
       name: user.name,
       id: user.id,
       permissions: user.permissions,
-    };
+    }
 
     return {
       access_token: this.jwtService.sign(payload),
-    };
+    }
   }
 }
